@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmet Yasir Topsakal | Portfolyo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. VARIABLES & THEMES --- */
+        :root {
+            /* Dark Theme (Default) */
+            --bg: #050505;
+            --text: #ececec;
+            --text-muted: #888;
+            --accent: #6d28d9; /* Deep Violet */
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --border: rgba(255, 255, 255, 0.1);
+            --nav-mix: difference;
+            --cursor-bg: white;
+            --font-main: 'Space Grotesk', sans-serif;
+            --font-display: 'Syne', sans-serif;
+        }
+
+        [data-theme="light"] {
+            /* Light Theme */
+            --bg: #f2f0ea;
+            --text: #1a1a1a;
+            --text-muted: #555;
+            --accent: #4f46e5;
+            --card-bg: rgba(255, 255, 255, 0.5);
+            --border: rgba(0, 0, 0, 0.1);
+            --nav-mix: normal;
+            --cursor-bg: #000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* --- 2. NOISE OVERLAY --- */
+        .noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9000; opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- 3. CURSOR --- */
+        .cursor {
+            position: fixed; top: 0; left: 0; width: 12px; height: 12px;
+            background: var(--cursor-bg); border-radius: 50%; pointer-events: none; z-index: 9999;
+            mix-blend-mode: difference; transition: transform 0.2s ease; transform: translate(-50%, -50%);
+        }
+        .cursor-follower {
+            position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+            border: 1px solid var(--text-muted); border-radius: 50%;
+            pointer-events: none; z-index: 9998; transition: all 0.15s ease-out;
+            transform: translate(-50%, -50%); opacity: 0.5;
+        }
+        body.hovering .cursor { transform: translate(-50%, -50%) scale(0); }
+        body.hovering .cursor-follower { transform: translate(-50%, -50%) scale(1.8); background: var(--text); opacity: 0.1; border-color: transparent; }
+
+        /* --- 4. NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 30px 50px;
+            display: flex; justify-content: space-between; align-items: center; z-index: 100;
+            mix-blend-mode: var(--nav-mix); 
+        }
+        .logo { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; color: var(--text); }
+        
+        .nav-controls { display: flex; gap: 15px; }
+        .nav-btn {
+            background: transparent; border: 1px solid var(--text-muted); color: var(--text);
+            padding: 8px 20px; border-radius: 30px; font-size: 0.9rem; text-transform: uppercase;
+            transition: 0.3s; letter-spacing: 1px;
+        }
+        .nav-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+        /* --- 5. HERO --- */
+        .hero {
+            height: 100vh; width: 100%; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            position: relative; padding: 0 20px;
+        }
+        .hero h1 {
+            font-family: var(--font-display); font-size: clamp(3rem, 8vw, 7rem);
+            line-height: 0.9; text-transform: uppercase; font-weight: 800;
+            margin-bottom: 20px;
+            max-width: 100%;
+        }
+        .hero h1 span { display: block; overflow: hidden; }
+        .hero-line { display: block; transform: translateY(100%); animation: slideUp 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards; }
+        #hero-l1 { animation-delay: 0.1s; }
+        #hero-l2 { animation-delay: 0.2s; }
+        #hero-l3 { animation-delay: 0.3s; color: var(--accent); }
+        
+        @keyframes slideUp { to { transform: translateY(0); } }
+        
+        .subtitle {
+            font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin-top: 30px;
+            opacity: 0; animation: fadeIn 1s forwards 1s;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* --- 6. DUAL IDENTITY --- */
+        .dual-section {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+            padding: 0 50px 100px 50px; max-width: 1400px; margin: 0 auto;
+        }
+        .identity-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            min-height: 500px; /* PC default */
+            padding: 40px; display: flex; flex-direction: column; justify-content: space-between;
+            transition: 0.5s; position: relative; overflow: hidden;
+            background-size: cover; background-position: center; background-blend-mode: overlay;
+        }
+        
+        /* Hover Effects */
+        #card-student:hover {
+            border-color: var(--accent); opacity: 1; transform: scale(1.02); z-index: 2;
+            background-color: var(--card-bg);
+            box-shadow: 0 0 30px rgba(109, 40, 217, 0.1);
+        }
+        #card-tutor:hover {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1531297461136-82lw8fca9b78?q=80&w=2670&auto=format&fit=crop'); 
+            border-color: var(--accent); opacity: 1; filter: blur(0); transform: scale(1.02); z-index: 2;
+        }
+
+        .dual-section:hover .identity-card:not(:hover) { opacity: 0.4; filter: blur(2px); }
+        .id-title { font-family: var(--font-display); font-size: 2rem; margin-bottom: 10px; text-transform: uppercase; }
+        .id-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 20px; }
+        .id-desc { font-size: 1rem; color: var(--text-muted); line-height: 1.6; max-width: 90%; }
+        .id-icon { font-size: 3rem; align-self: flex-end; opacity: 0.2; margin-top: 20px; }
+
+        /* --- 7. METHODOLOGY --- */
+        .method-section {
+            padding: 100px 50px; max-width: 1400px; margin: 0 auto;
+        }
+        .section-header { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 50px; text-align: center; }
+        .method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .method-card {
+            padding: 30px; border-top: 1px solid var(--border); transition: 0.3s;
+        }
+        .method-card:hover { border-color: var(--accent); transform: translateY(-10px); }
+        .method-num { font-size: 3rem; font-weight: 800; color: var(--border); margin-bottom: 10px; display: block; }
+        .method-card:hover .method-num { color: var(--accent); }
+        .method-head { font-size: 1.5rem; margin-bottom: 15px; font-weight: bold; }
+        .method-txt { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* --- 8. STATS --- */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px;
+            padding: 100px 50px; max-width: 1200px; margin: 0 auto; text-align: center;
+        }
+        .stat-item h3 { font-family: var(--font-display); font-size: 3.5rem; color: var(--text); margin-bottom: 10px; }
+        .stat-item p { color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; }
+        #stat-3-val { font-size: 2.5rem; } 
+
+        /* --- 9. CONTACT --- */
+        .contact-section { padding: 100px 50px; text-align: center; padding-bottom: 150px; }
+        
+        .contact-label {
+            text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); 
+            margin-bottom: 15px; font-size: 1.2rem;
+        }
+        .email-display {
+            font-family: var(--font-display);
+            font-size: clamp(1.2rem, 4vw, 3.5rem); 
+            color: var(--text); text-decoration: none; transition: 0.3s;
+            word-break: break-all; display: block;
+        }
+        .email-display:hover { color: var(--accent); }
+
+        /* --- RESPONSIVE FIXES (MOBILE) --- */
+        @media (max-width: 768px) {
+            nav { padding: 20px 15px; }
+            
+            /* HERO */
+            .hero { padding: 0 15px; overflow: hidden; }
+            .hero h1 { 
+                font-size: 11vw; /* Responsive sizing */
+                margin-bottom: 15px; 
+                /* Manual Hyphenation fix logic */
+                word-wrap: break-word; 
+                overflow-wrap: break-word;
+            }
+            .subtitle { font-size: 0.9rem; padding: 0 5px; }
+
+            /* CARD FIXES */
+            .dual-section { 
+                grid-template-columns: 1fr; 
+                padding: 40px 20px; 
+                gap: 20px;
+            }
+            .identity-card { 
+                height: auto; 
+                min-height: auto; 
+                padding: 30px;
+                justify-content: flex-start; 
+                gap: 20px; 
+            }
+            
+            .method-section { padding: 60px 20px; }
+            .section-header { font-size: 2rem; }
+            .method-head { font-size: 1.3rem; }
+            .method-txt { font-size: 0.9rem; }
+            
+            .stats-grid { padding: 60px 20px; gap: 30px; }
+            .stat-item h3 { font-size: 2.5rem; }
+            
+            .contact-section { padding: 60px 20px 100px 20px; }
+            .email-display { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <nav>
+        <div class="logo hover-target">AYT.</div>
+        <div class="nav-controls">
+            <button class="nav-btn hover-target" onclick="toggleTheme()" id="theme-btn">🌗</button>
+            <button class="nav-btn hover-target" id="lang-btn">🌐 EN</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>
+            <span><span class="hero-line" id="l1">İNGİLİZ-</span></span>
+            <span><span class="hero-line" id="l2">CEDE SESİNİ</span></span>
+            <span><span class="hero-line" id="l3" style="color:var(--accent);">KEŞFET.</span></span>
+        </h1>
+        <p class="subtitle" id="sub">Ahmet Yasir Topsakal — Gündüzleri İngiliz Edebiyatı okuyorum, geceleri kişisel İngilizce eğitmeninim.</p>
+    </section>
+
+    <section class="dual-section">
+        <div class="identity-card hover-target" id="card-student">
+            <div>
+                <p class="id-tag" id="c1-tag">Üniversite Hayatı</p>
+                <h2 class="id-title" id="c1-title">Öğrenci Tarafım</h2>
+                <p class="id-desc" id="c1-desc">2024'ten beri İngiliz Dili ve Edebiyatı okuyorum. Gramer ve tarihin derinliklerine iniyorum, böylece senin inmen gerekmiyor.</p>
+            </div>
+            <div class="id-icon">🏛️</div>
+        </div>
+        <div class="identity-card hover-target" id="card-tutor">
+            <div>
+                <p class="id-tag" id="c2-tag">Ek İşim</p>
+                <h2 class="id-title" id="c2-title">Eğitmenin</h2>
+                <p class="id-desc" id="c2-desc">3 aydır insanların daha iyi konuşmasına yardım ediyorum. Sıkıcı dersler yok, sadece kullanabileceğin pratik İngilizce.</p>
+            </div>
+            <div class="id-icon">⚡</div>
+        </div>
+    </section>
+
+    <section class="method-section">
+        <h2 class="section-header" id="method-title">Sınıf Değil.</h2>
+        <div class="method-grid">
+            <div class="method-card hover-target">
+                <span class="method-num">01</span>
+                <h3 class="method-head" id="m1-t">Plan</h3>
+                <p class="method-txt" id="m1-d">Neye ihtiyacın var? Sınavlar mı? Altyazısız Netflix mi? Tarzına uygun bir plan yapıyoruz.</p>
+            </div>
+            <div class="method-card hover-target">
+                <span class="method-num">02</span>
+                <h3 class="method-head" id="m2-t">Sıkıcı Değil</h3>
+                <p class="method-txt" id="m2-d">Ders kitapları kurudur. Biz sevdiğin şeyleri kullanıyoruz—filmler, oyunlar ve gerçek sohbetler.</p>
+            </div>
+            <div class="method-card hover-target">
+                <span class="method-num">03</span>
+                <h3 class="method-head" id="m3-t">Özgüven</h3>
+                <p class="method-txt" id="m3-d">Hata yapmak havalıdır. Onları düzeltmene ve korkmadan konuşmana yardım etmek için buradayım.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="method-section">
+        <h2 class="section-header" id="mode-title">Senin Tercihin.</h2>
+        <div class="method-grid">
+            <div class="method-card hover-target">
+                <div style="font-size: 3rem; margin-bottom: 20px;">☕</div>
+                <h3 class="method-head" id="mode-1-t">Yüz Yüze</h3>
+                <p class="method-txt" id="mode-1-d">Kafeler, kütüphaneler veya sessiz alanlar. Maksimum odak için gerçek etkileşim.</p>
+            </div>
+            <div class="method-card hover-target">
+                <div style="font-size: 3rem; margin-bottom: 20px;">💻</div>
+                <h3 class="method-head" id="mode-2-t">Online</h3>
+                <p class="method-txt" id="mode-2-d">Discord, Zoom veya Google Meet. Odanın rahatlığında öğren.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-grid">
+        <div class="stat-item hover-target">
+            <h3 id="stat-3-val">TR & EN</h3>
+            <p id="stat-3-desc">Anadil / Akıcı</p>
+            <p id="stat-3-extra" style="margin-top:10px; color:var(--accent); font-size:0.8rem; font-weight:bold;">+ Fransızca (Öğreniliyor)</p>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <p class="contact-label" id="ct-label">Bana Ulaşın</p>
+        <span class="email-display hover-target">ahmetwubsns@gmail.com</span>
+    </section>
+
+    <script>
+        // --- 1. THEME TOGGLE ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        }
+
+        // --- 2. CURSOR ---
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        let posX = 0, posY = 0, mouseX = 0, mouseY = 0;
+
+        window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`; });
+        setInterval(() => { posX += (mouseX - posX) / 9; posY += (mouseY - posY) / 9; follower.style.transform = `translate3d(${posX}px, ${posY}px, 0) translate(-50%, -50%)`; }, 10);
+        document.querySelectorAll('.hover-target').forEach(el => { el.addEventListener('mouseenter', () => document.body.classList.add('hovering')); el.addEventListener('mouseleave', () => document.body.classList.remove('hovering')); });
+
+        // --- 3. LANGUAGE TOGGLE ---
+        const langBtn = document.getElementById('lang-btn');
+        let isEn = false; // Default to Turkish
+        
+        langBtn.addEventListener('click', () => {
+            isEn = !isEn;
+            langBtn.innerText = isEn ? "🌐 TR" : "🌐 EN";
+            
+            const t = isEn ? {
+                // Hero
+                l1:"Unlock Your", l2:"Voice in", l3:"English.", sub:"Ahmet Yasir Topsakal — English Lit. Student by day, your personal language tutor by night.",
+                // Identity
+                c1t:"University Life", c1ti:"The Student", c1d:"I'm studying English Language and Literature (since 2024). I dive deep into grammar and history so you don't have to.",
+                c2t:"My Side Hustle", c2ti:"Your Tutor", c2d:"3 months of helping people speak better. No boring lectures, just practical English you can actually use.",
+                // Method
+                mt:"Not a Classroom.", m1t:"The Plan", m1d:"What do you need? Exams? Netflix without subs? We build a plan that fits your vibe.",
+                m2t:"Not Boring", m2d:"Textbooks are dry. We use things you actually like—movies, games, and real conversations.",
+                m3t:"Confidence", m3d:"Mistakes are cool. I'm here to help you fix them and get you speaking without fear.",
+                // Modes (New Section)
+                modet: "Your Choice.",
+                mode1t: "Face to Face", mode1d: "Coffee shops, libraries, or quiet spaces. Real interaction for maximum focus.",
+                mode2t: "Online", mode2d: "Discord, Zoom, or Google Meet. Learn from the comfort of your room.",
+                // Stats
+                s3val: "TR & EN", s3desc: "Native / Fluent", s3extra: "+ French (In Progress)",
+                // Contact
+                ctlbl: "Contact Me"
+            } : {
+                // Hero - Manual Hyphenation for Turkish
+                l1:"İNGİLİZ-", l2:"CEDE SESİNİ", l3:"KEŞFET.", sub:"Ahmet Yasir Topsakal — Gündüzleri İngiliz Edebiyatı okuyorum, geceleri kişisel İngilizce eğitmeninim.",
+                // Identity
+                c1t:"Üniversite Hayatı", c1ti:"Öğrenci Tarafım", c1d:"2024'ten beri İngiliz Dili ve Edebiyatı okuyorum. Gramer ve tarihin derinliklerine iniyorum, böylece senin inmen gerekmiyor.",
+                c2t:"Ek İşim", c2ti:"Eğitmenin", c2d:"3 aydır insanların daha iyi konuşmasına yardım ediyorum. Sıkıcı dersler yok, sadece kullanabileceğin pratik İngilizce.",
+                // Method
+                mt:"Sınıf Değil.", m1t:"Plan", m1d:"Neye ihtiyacın var? Sınavlar mı? Altyazısız Netflix mi? Tarzına uygun bir plan yapıyoruz.",
+                m2t:"Sıkıcı Değil", m2d:"Ders kitapları kurudur. Biz sevdiğin şeyleri kullanıyoruz—filmler, oyunlar ve gerçek sohbetler.",
+                m3t:"Özgüven", m3d:"Hata yapmak havalıdır. Onları düzeltmene ve korkmadan konuşmana yardım etmek için buradayım.",
+                // Modes
+                modet: "Senin Tercihin.",
+                mode1t: "Yüz Yüze", mode1d: "Kafeler, kütüphaneler veya sessiz alanlar. Maksimum odak için gerçek etkileşim.",
+                mode2t: "Online", mode2d: "Discord, Zoom veya Google Meet. Odanın rahatlığında öğren.",
+                // Stats
+                s3val: "TR & EN", s3desc: "Anadil / Akıcı", s3extra: "+ Fransızca (Öğreniliyor)",
+                // Contact
+                ctlbl: "Bana Ulaşın"
+            };
+
+            // DOM Updates
+            document.getElementById('l1').innerText = t.l1; document.getElementById('l2').innerText = t.l2; document.getElementById('l3').innerText = t.l3; document.getElementById('sub').innerText = t.sub;
+            document.getElementById('c1-tag').innerText = t.c1t; document.getElementById('c1-title').innerText = t.c1ti; document.getElementById('c1-desc').innerText = t.c1d;
+            document.getElementById('c2-tag').innerText = t.c2t; document.getElementById('c2-title').innerText = t.c2ti; document.getElementById('c2-desc').innerText = t.c2d;
+            
+            document.getElementById('method-title').innerText = t.mt;
+            document.getElementById('m1-t').innerText = t.m1t; document.getElementById('m1-d').innerText = t.m1d;
+            document.getElementById('m2-t').innerText = t.m2t; document.getElementById('m2-d').innerText = t.m2d;
+            document.getElementById('m3-t').innerText = t.m3t; document.getElementById('m3-d').innerText = t.m3d;
+            
+            // Mode Updates
+            document.getElementById('mode-title').innerText = t.modet;
+            document.getElementById('mode-1-t').innerText = t.mode1t; document.getElementById('mode-1-d').innerText = t.mode1d;
+            document.getElementById('mode-2-t').innerText = t.mode2t; document.getElementById('mode-2-d').innerText = t.mode2d;
+
+            document.getElementById('stat-3-val').innerText = t.s3val; document.getElementById('stat-3-desc').innerText = t.s3desc; document.getElementById('stat-3-extra').innerText = t.s3extra;
+
+            document.getElementById('ct-label').innerText = t.ctlbl;
+        });
+    </script>
+</body>
+</html>
