@@ -114,7 +114,7 @@
         }
         .identity-card {
             background: var(--card-bg); border: 1px solid var(--border);
-            min-height: 500px; /* PC default */
+            min-height: 500px;
             padding: 40px; display: flex; flex-direction: column; justify-content: space-between;
             transition: 0.5s; position: relative; overflow: hidden;
             background-size: cover; background-position: center; background-blend-mode: overlay;
@@ -152,7 +152,44 @@
         .method-head { font-size: 1.5rem; margin-bottom: 15px; font-weight: bold; }
         .method-txt { color: var(--text-muted); font-size: 0.95rem; }
 
-        /* --- 8. STATS --- */
+        /* --- 8. PRICING (NEW SECTION) --- */
+        .pricing-section {
+            padding: 50px 50px; text-align: center;
+        }
+        .pricing-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 50px 30px;
+            max-width: 500px;
+            margin: 0 auto;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        .pricing-box:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .main-price {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            line-height: 1;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+        .price-unit {
+            font-size: 1.2rem; color: var(--text-muted); font-family: var(--font-main); vertical-align: middle;
+        }
+        .price-secondary {
+            font-size: 1rem; color: var(--text-muted); margin-top: 15px; padding-top: 15px;
+            border-top: 1px dashed var(--border);
+        }
+        .price-note {
+            margin-top: 25px; font-size: 0.85rem; color: var(--accent);
+            font-style: italic; opacity: 0.9;
+        }
+
+        /* --- 9. STATS --- */
         .stats-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px;
             padding: 100px 50px; max-width: 1200px; margin: 0 auto; text-align: center;
@@ -161,7 +198,7 @@
         .stat-item p { color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; }
         #stat-3-val { font-size: 2.5rem; } 
 
-        /* --- 9. CONTACT --- */
+        /* --- 10. CONTACT --- */
         .contact-section { padding: 100px 50px; text-align: center; padding-bottom: 150px; }
         
         .contact-label {
@@ -179,40 +216,19 @@
         /* --- RESPONSIVE FIXES (MOBILE) --- */
         @media (max-width: 768px) {
             nav { padding: 20px 15px; }
-            
-            /* HERO */
             .hero { padding: 0 15px; overflow: hidden; }
-            .hero h1 { 
-                font-size: 11vw; /* Responsive sizing */
-                margin-bottom: 15px; 
-                /* Manual Hyphenation fix logic */
-                word-wrap: break-word; 
-                overflow-wrap: break-word;
-            }
+            .hero h1 { font-size: 11vw; margin-bottom: 15px; word-wrap: break-word; overflow-wrap: break-word; }
             .subtitle { font-size: 0.9rem; padding: 0 5px; }
-
-            /* CARD FIXES */
-            .dual-section { 
-                grid-template-columns: 1fr; 
-                padding: 40px 20px; 
-                gap: 20px;
-            }
-            .identity-card { 
-                height: auto; 
-                min-height: auto; 
-                padding: 30px;
-                justify-content: flex-start; 
-                gap: 20px; 
-            }
-            
+            .dual-section { grid-template-columns: 1fr; padding: 40px 20px; gap: 20px; }
+            .identity-card { height: auto; min-height: auto; padding: 30px; justify-content: flex-start; gap: 20px; }
             .method-section { padding: 60px 20px; }
             .section-header { font-size: 2rem; }
             .method-head { font-size: 1.3rem; }
             .method-txt { font-size: 0.9rem; }
-            
+            .pricing-section { padding: 60px 20px; }
+            .pricing-box { padding: 30px 20px; }
             .stats-grid { padding: 60px 20px; gap: 30px; }
             .stat-item h3 { font-size: 2.5rem; }
-            
             .contact-section { padding: 60px 20px 100px 20px; }
             .email-display { font-size: 1.2rem; }
         }
@@ -238,7 +254,7 @@
             <span><span class="hero-line" id="l2">CEDE SESİNİ</span></span>
             <span><span class="hero-line" id="l3" style="color:var(--accent);">KEŞFET.</span></span>
         </h1>
-        <p class="subtitle" id="sub">Ahmet Yasir Topsakal — Gündüzleri İngiliz Edebiyatı okuyorum, geceleri kişisel İngilizce eğitmeninim.</p>
+        <p class="subtitle" id="sub">Ahmet Yasir Topsakal — Profesyonel bir İngiliz Dili ve Edebiyatı öğrencisinin yardımıyla notlarını yükselt.</p>
     </section>
 
     <section class="dual-section">
@@ -254,7 +270,7 @@
             <div>
                 <p class="id-tag" id="c2-tag">Ek İşim</p>
                 <h2 class="id-title" id="c2-title">Eğitmenin</h2>
-                <p class="id-desc" id="c2-desc">3 aydır insanların daha iyi konuşmasına yardım ediyorum. Sıkıcı dersler yok, sadece kullanabileceğin pratik İngilizce.</p>
+                <p class="id-desc" id="c2-desc">İnsanların daha iyi konuşmasına yardım ediyorum. Sıkıcı dersler yok, sadece kullanabileceğin pratik İngilizce.</p>
             </div>
             <div class="id-icon">⚡</div>
         </div>
@@ -294,6 +310,21 @@
                 <h3 class="method-head" id="mode-2-t">Online</h3>
                 <p class="method-txt" id="mode-2-d">Discord, Zoom veya Google Meet. Odanın rahatlığında öğren.</p>
             </div>
+        </div>
+    </section>
+
+    <section class="pricing-section">
+        <h2 class="section-header" id="price-title">Ücretler.</h2>
+        <div class="pricing-box hover-target">
+            <div class="main-price">
+                600₺ <span class="price-unit" id="price-unit">/ 40 dk</span>
+            </div>
+            <div class="price-secondary" id="price-sec">
+                Uzak mesafe için 700₺
+            </div>
+            <p class="price-note" id="price-note">
+                (kişilerin talebine göre süre ayarlanabilir)
+            </p>
         </div>
     </section>
 
@@ -337,28 +368,41 @@
             
             const t = isEn ? {
                 // Hero
-                l1:"Unlock Your", l2:"Voice in", l3:"English.", sub:"Ahmet Yasir Topsakal — English Lit. Student by day, your personal language tutor by night.",
+                l1:"Unlock Your", l2:"Voice in", l3:"English.", 
+                // EN SLOGAN
+                sub:"Ahmet Yasir Topsakal — Upgrade your grades with the help of a professional English Language and Literature Student.",
+                
                 // Identity
                 c1t:"University Life", c1ti:"The Student", c1d:"I'm studying English Language and Literature (since 2024). I dive deep into grammar and history so you don't have to.",
-                c2t:"My Side Hustle", c2ti:"Your Tutor", c2d:"3 months of helping people speak better. No boring lectures, just practical English you can actually use.",
+                c2t:"My Side Hustle", c2ti:"Your Tutor", 
+                c2d:"Helping people speak better. No boring lectures, just practical English you can actually use.",
                 // Method
                 mt:"Not a Classroom.", m1t:"The Plan", m1d:"What do you need? Exams? Netflix without subs? We build a plan that fits your vibe.",
                 m2t:"Not Boring", m2d:"Textbooks are dry. We use things you actually like—movies, games, and real conversations.",
                 m3t:"Confidence", m3d:"Mistakes are cool. I'm here to help you fix them and get you speaking without fear.",
-                // Modes (New Section)
+                // Modes
                 modet: "Your Choice.",
                 mode1t: "Face to Face", mode1d: "Coffee shops, libraries, or quiet spaces. Real interaction for maximum focus.",
                 mode2t: "Online", mode2d: "Discord, Zoom, or Google Meet. Learn from the comfort of your room.",
+                // Pricing (EN) - UPDATED TO 'PRICES'
+                prTitle: "Prices.",
+                prUnit: "/ 40 min",
+                prSec: "700₺ for long distance",
+                prNote: "(duration can be adjusted upon request)",
                 // Stats
                 s3val: "TR & EN", s3desc: "Native / Fluent", s3extra: "+ French (In Progress)",
                 // Contact
                 ctlbl: "Contact Me"
             } : {
-                // Hero - Manual Hyphenation for Turkish
-                l1:"İNGİLİZ-", l2:"CEDE SESİNİ", l3:"KEŞFET.", sub:"Ahmet Yasir Topsakal — Gündüzleri İngiliz Edebiyatı okuyorum, geceleri kişisel İngilizce eğitmeninim.",
+                // Hero
+                l1:"İNGİLİZ-", l2:"CEDE SESİNİ", l3:"KEŞFET.", 
+                // TR SLOGAN
+                sub:"Ahmet Yasir Topsakal — Profesyonel bir İngiliz Dili ve Edebiyatı öğrencisinin yardımıyla notlarını yükselt.",
+                
                 // Identity
                 c1t:"Üniversite Hayatı", c1ti:"Öğrenci Tarafım", c1d:"2024'ten beri İngiliz Dili ve Edebiyatı okuyorum. Gramer ve tarihin derinliklerine iniyorum, böylece senin inmen gerekmiyor.",
-                c2t:"Ek İşim", c2ti:"Eğitmenin", c2d:"3 aydır insanların daha iyi konuşmasına yardım ediyorum. Sıkıcı dersler yok, sadece kullanabileceğin pratik İngilizce.",
+                c2t:"Ek İşim", c2ti:"Eğitmenin", 
+                c2d:"İnsanların daha iyi konuşmasına yardım ediyorum. Sıkıcı dersler yok, sadece kullanabileceğin pratik İngilizce.",
                 // Method
                 mt:"Sınıf Değil.", m1t:"Plan", m1d:"Neye ihtiyacın var? Sınavlar mı? Altyazısız Netflix mi? Tarzına uygun bir plan yapıyoruz.",
                 m2t:"Sıkıcı Değil", m2d:"Ders kitapları kurudur. Biz sevdiğin şeyleri kullanıyoruz—filmler, oyunlar ve gerçek sohbetler.",
@@ -367,6 +411,11 @@
                 modet: "Senin Tercihin.",
                 mode1t: "Yüz Yüze", mode1d: "Kafeler, kütüphaneler veya sessiz alanlar. Maksimum odak için gerçek etkileşim.",
                 mode2t: "Online", mode2d: "Discord, Zoom veya Google Meet. Odanın rahatlığında öğren.",
+                // Pricing (TR)
+                prTitle: "Ücretler.",
+                prUnit: "/ 40 dk",
+                prSec: "Uzak mesafe için 700₺",
+                prNote: "(kişilerin talebine göre süre ayarlanabilir)",
                 // Stats
                 s3val: "TR & EN", s3desc: "Anadil / Akıcı", s3extra: "+ Fransızca (Öğreniliyor)",
                 // Contact
@@ -387,6 +436,12 @@
             document.getElementById('mode-title').innerText = t.modet;
             document.getElementById('mode-1-t').innerText = t.mode1t; document.getElementById('mode-1-d').innerText = t.mode1d;
             document.getElementById('mode-2-t').innerText = t.mode2t; document.getElementById('mode-2-d').innerText = t.mode2d;
+
+            // Pricing Updates
+            document.getElementById('price-title').innerText = t.prTitle;
+            document.getElementById('price-unit').innerText = t.prUnit;
+            document.getElementById('price-sec').innerText = t.prSec;
+            document.getElementById('price-note').innerText = t.prNote;
 
             document.getElementById('stat-3-val').innerText = t.s3val; document.getElementById('stat-3-desc').innerText = t.s3desc; document.getElementById('stat-3-extra').innerText = t.s3extra;
 
